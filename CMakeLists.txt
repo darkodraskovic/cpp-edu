@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 3.8)
+project (boilerplate)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+function(add_target TARGET SOURCES)
+  foreach(FILE ${SOURCES})
+    list(APPEND SOURCES_PREPEND Source/${TARGET}/${FILE})
+  endforeach()
+  add_executable(${TARGET} ${SOURCES_PREPEND})
+  target_include_directories(${TARGET} PUBLIC src/${TARGET})
+endfunction()
+
+add_target(17 "Main.cpp")
+add_target(19 "Main.cpp")
+add_target(21 "Main.cpp;Image.cpp")
