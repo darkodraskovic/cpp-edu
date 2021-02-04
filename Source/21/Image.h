@@ -10,9 +10,20 @@ class Image
 {
 public:
     Image();
-    Image(const unsigned int& width, const unsigned int& height);
+    Image(const unsigned int width, const unsigned int height);
     ~Image();
+
+    unsigned int GetWidth() const;
+    unsigned int GetHeigh() const;
+    void SetWidth(unsigned int width);
+    void SetHeight(unsigned int height);
+
+    void ClearImage(uchar value);
+    void SetPixel(unsigned int x, unsigned int y, uchar value);
+    void ResizeImage(unsigned int width, unsigned int height);
     
+    void SaveImage(const char *fileName) const;
+
 private:
     unsigned int width_;
     unsigned int height_;
