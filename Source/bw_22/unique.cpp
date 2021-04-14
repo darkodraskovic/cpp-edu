@@ -1,19 +1,5 @@
 #include "strc.h"
-#include <cstdio>
-#include <memory>
-
-void message(const char* s) {
-    printf("\n%s\n",s);
-    fflush(stdout);
-}
-
-// display obj val from unique ptr
-void disp_unique(std::unique_ptr<strc>& o){
-    if (o) puts(o->value());
-    else puts("null");
-    fflush(stdout);
-}
-
+#include "utils.h"
 
 void f_unique(std::unique_ptr<strc>& p) {
     message("f()");
