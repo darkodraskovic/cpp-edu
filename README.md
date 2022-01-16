@@ -1,6 +1,6 @@
-# C++ examples
+# C++ Edu
 
-The examples can be found in the *Source* directory. Examples prefixed with
+This repository contains examples that demonstrate different and particular features of C and C++. The examples can be found in the *Source* directory. Examples prefixed with
 
 - `bw` correspond to Bill Weinmann's [C++: Advanced Topics](https://www.lynda.com/C-tutorials/C-Advanced-Programming-Topics/782128-2.html) course,
 - `kk` correspond to Jan Schaffranek's [C++ Komplettkurs: Praxisnahe und Moderne C++ Programmierung](https://www.udemy.com/course/der-komplettkurs-zur-modernen-c-programmierung/) course,
