@@ -8,20 +8,32 @@ void message(const char* s) {
 }
 
 // display obj val from unique ptr
-void disp_unique(std::unique_ptr<strc>& o){
+void disp(std::unique_ptr<strc>& o){
     if (o) puts(o->value());
     else puts("null");
     fflush(stdout);
 }
 
-void disp_shared(std::shared_ptr<strc>& o) {
-    if (o) printf("%s (%ld)\n", o->value(), o.use_count());
+void disp(std::shared_ptr<strc>& o) {
+    if (o) printf("val: %s; use count: %ld\n", o->value(), o.use_count());
     else puts("[null]");
     fflush(stdout);
 }
 
-void disp_weak(std::weak_ptr<strc>& o) {
-    size_t count = o.use_count();
-    if (auto sp = o.lock()) printf("%s (w:%ld s:%ld)\n", sp->value(), count, sp.use_count());
+void disp(std::weak_ptr<strc>& o) {
+    size_t count = o.use_count(); // weak ptr count
+    // must lock weak ptr in order to refer to its val
+    if (auto sp = o.lock()) printf("val: %s; use count: w:%ld s:%ld\n", sp->value(), count, sp.use_count());
     else puts("[null]");
+}
+
+void deleter(const strc* o) {
+    std::printf("deleter: ");
+    if (o) {
+        printf("%s\n", o->value());
+        delete o;
+    } else {
+        std::printf("[null]\n");
+    }
+    fflush(stdout);
 }

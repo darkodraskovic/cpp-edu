@@ -1,42 +1,47 @@
 #include "strc.h"
 #include "utils.h"
+#include <cstdlib>
+#include <iostream>
+#include <memory>
 
-void f_unique(std::unique_ptr<strc>& p) {
-    message("f()");
-    disp_unique(p);
+// can't call by value with unique ptr, so use ref as param
+void f_unique(std::unique_ptr<strc>& p){
+    std::cout << "f_unique(): ";
+    disp(p);
 }
 
 void demo_unique() {
     message("create unique pointer one");
     std::unique_ptr<strc> a(new strc("one"));
-    disp_unique(a);
-    f_unique(a);
+    disp(a);
     
     message("make_unique two");
     auto b = std::make_unique<strc>("two");
-    disp_unique(a);
-    disp_unique(b);
+    disp(a);
+    f_unique(b);
 
     message("reset a to three");
     a.reset(new strc("three"));
-    disp_unique(a);
-    disp_unique(b);
+    disp(a);
+    disp(b);
 
+    // can't copy unique ptr, but can move it
     message("move b to c");
     auto c = std::move(b);
-    disp_unique(a);
-    disp_unique(b);
-    disp_unique(c);
+    disp(a);
+    disp(b);
+    disp(c);
 
     message("reset a");
     a.reset();
-    disp_unique(a);
-    disp_unique(b);
-    disp_unique(c);
+    disp(a);
+    disp(b);
+    disp(c);
 
+    // release dissociates ptr from obj without destroying obj
     message("release c");
-    c.release();
-    disp_unique(a);
-    disp_unique(b);
-    disp_unique(c);
+    delete c.release();
+    disp(a);
+    disp(b);
+    disp(c);
 }

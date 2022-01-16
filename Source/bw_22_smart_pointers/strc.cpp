@@ -53,4 +53,4 @@ strc& strc::operator=(strc o) {
     return *this;
 }
 
-strc::operator const char *() const { return value(); }
+strc::operator const char* () const { return value(); }
