@@ -8,6 +8,13 @@ set(CMAKE_C_STANDARD 11)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+if (WIN32)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_SOURCE_DIR}/bin")
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_CURRENT_SOURCE_DIR}/bin")
+else()
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
+endif()
+
 function(add_target TARGET SOURCES)
   foreach(FILE ${SOURCES})
     list(APPEND SOURCES_PREPEND Source/${TARGET}/${FILE})
@@ -33,6 +40,7 @@ target_include_directories(dd_02 PUBLIC ${Python_inc})
 target_link_directories(dd_02 PUBLIC ${Python_link})
 target_link_libraries(dd_02 PUBLIC ${Python_libs})
 
+add_target(kk_1d_console_game "Main.cpp")
 add_target(kk_17 "Main.cpp")
 add_target(kk_19 "Main.cpp")
 add_target(kk_21 "Main.cpp;Image.cpp")
