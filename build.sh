@@ -1,8 +1,10 @@
-PROJ_DIR=c:/Users/darko/Development/cpp-edu
+ROOT_DIR=/home/darko/Development/cpp-edu/
+COMPILE_CMD="make"
 
 CONFIGURE=false
-CONFIGURATION=Release
+WIN_CONFIG=Release
 TARGET=
+EXE=
 RUN=false
 
 while getopts "t:cdr" option; do
@@ -11,10 +13,11 @@ while getopts "t:cdr" option; do
             CONFIGURE=true
             ;;
         d)
-            CONFIGURATION=Debug
+            WIN_CONFIG=Debug
             ;;
         t)
             TARGET=$OPTARG
+            EXE=./$TARGET
             ;;
         r) RUN=true
            ;;
@@ -27,30 +30,47 @@ validate_exit() {
     fi
 }
 
+if [ "$OSTYPE" = "msys" ]; then
+    WIN=true
+    
+    COMPILE_CMD="MSBuild.exe -target:Build /property:Configuration=${WIN_CONFIG}"
+    ROOT_DIR=c:/Users/darko/Development/cpp-edu
+
+fi
+
 if [ $CONFIGURE = true ]; then
     echo "INFO: configure MSBuild"
-    cd ${PROJ_DIR}/build
+    cd ${ROOT_DIR}/build
     cmake ..
     validate_exit
 
-    echo "INFO: configure Ninja"    
-    cd $PROJ_DIR/ninja/
-    cmake -G"Ninja" ..
-    mv compile_commands.json ..
-    validate_exit
-
+    if [ "$WIN" == true ]; then    
+        echo "INFO: configure Ninja"    
+        cd $ROOT_DIR/ninja/
+        cmake -G"Ninja" ..
+        mv compile_commands.json ..
+        validate_exit
+    fi
+    
     exit 0
 fi
 
 if [ -z ${TARGET} ]; then
     exit 0
+else
+    if [ "$WIN" == true ]; then
+        TARGET=${TARGET}.vcxproj
+        EXE=.\\${TARGET}.exe
+    fi
 fi
    
-cd $PROJ_DIR/build
-MSBuild.exe -target:"Build" /property:Configuration=${CONFIGURATION} .\\${TARGET}.vcxproj
+cd $ROOT_DIR/build
+echo "COMPILE_CMD: $COMPILE_CMD $TARGET"
+$COMPILE_CMD $TARGET
 validate_exit
 
-if [ $RUN == true ]; then
-    cd $PROJ_DIR/bin
-    .\\${TARGET}.exe
+if [ "$RUN" == true ]; then
+    cd $ROOT_DIR/bin
+    echo "EXE_CMD: ${EXE}"
+    ${EXE}
 fi
