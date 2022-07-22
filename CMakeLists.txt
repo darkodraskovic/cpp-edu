@@ -41,6 +41,8 @@ target_link_directories(dd_02 PUBLIC ${Python_link})
 target_link_libraries(dd_02 PUBLIC ${Python_libs})
 
 add_target(kk_1d_console_game "Main.cpp")
+add_target(kk_07_char_array "Main.cpp")
+add_target(kk_08_array_index_vs_ptr "Main.cpp")
 add_target(kk_17 "Main.cpp")
 add_target(kk_19 "Main.cpp")
 add_target(kk_21 "Main.cpp;Image.cpp")
