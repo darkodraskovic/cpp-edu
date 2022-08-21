@@ -1,4 +1,4 @@
-ROOT_DIR=/home/darko/Development/cpp-edu/
+ROOT_DIR=/home/darko/Development/cpp-edu
 COMPILE_CMD="make"
 
 CONFIGURE=false
@@ -35,7 +35,6 @@ if [ "$OSTYPE" = "msys" ]; then
     
     COMPILE_CMD="MSBuild.exe -target:Build /property:Configuration=${WIN_CONFIG}"
     ROOT_DIR=c:/Users/darko/Development/cpp-edu
-
 fi
 
 if [ $CONFIGURE = true ]; then
@@ -57,11 +56,11 @@ fi
 
 if [ -z ${TARGET} ]; then
     exit 0
-else
-    if [ "$WIN" == true ]; then
-        TARGET=${TARGET}.vcxproj
-        EXE=.\\${TARGET}.exe
-    fi
+fi
+
+if [ "$WIN" == true ]; then
+    EXE=.\\${TARGET}.exe
+    TARGET=${TARGET}.vcxproj
 fi
    
 cd $ROOT_DIR/build
