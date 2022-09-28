@@ -4,3 +4,4 @@ compile_commands.json
 ninja/
 bin/
 .vscode
+00_playground/

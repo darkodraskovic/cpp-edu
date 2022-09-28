@@ -2,7 +2,18 @@
 
 #include <iostream>
 
-void print_game_state(unsigned int player) {
+// the "anonymous" namespace means that these variables can be used only in this
+// compilation unit (file), i.e. they are invisible from the outside
+namespace {
+constexpr static std::uint32_t LEN_X = 10U;
+constexpr static std::uint32_t START = 0U;
+constexpr static std::uint32_t GOAL = 9U;
+
+constexpr static char LEFT = 'a';
+constexpr static char RIGHT = 'd';
+}  // namespace
+
+void print_game_state(const std::uint32_t player) {
   for (unsigned int i = 0; i < LEN_X; i++) {
     if (i == player) {
       std::cout << "@";
@@ -14,7 +25,7 @@ void print_game_state(unsigned int player) {
   }
 }
 
-unsigned int execute_move(unsigned int player, char move) {
+unsigned int execute_move(const std::uint32_t player, const char move) {
   if (move == LEFT && player > START) {
     return player - 1;
   } else if (move == RIGHT && player < GOAL) {
@@ -25,7 +36,7 @@ unsigned int execute_move(unsigned int player, char move) {
   }
 }
 
-bool is_finished(unsigned int player) { return player == GOAL; }
+bool is_finished(const std::uint32_t player) { return player == GOAL; }
 
 void game() {
   unsigned int player = 0;
